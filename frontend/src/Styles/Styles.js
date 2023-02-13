@@ -1,4 +1,4 @@
-import styled, {createGlobalStyle} from 'styled-components';
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 body{
@@ -13,37 +13,38 @@ body{
 `;
 
 export const Wrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-.score{
-    color:DodgerBlue ;
-    font-size:2rem;
-    margin:0;
-}
-h1{
+  .score {
+    color: DodgerBlue;
+    font-size: 2rem;
+    margin: 0;
+  }
+  h1 {
     background-size: 100%;
     color: crimson;
     font-size: 70px;
-    font-weight:400;
+    font-weight: 400;
     text-align: center;
     margin: 20px;
-}
-.start, .next{
-    cursor: pointer;
-    background: linear-gradient(180deg, #fff, #ffcc91);
-    border: 2px solid #d38558;
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.25);
-    border-radius: 10px;
-    height:40px;
+  }
+  .start,
+  .next {
+    background: crimson;
+    color: #fff;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    height: 40px;
     margin: 20px 0;
     padding: 0 40px;
-}
-.start{
+  }
+
+  .start {
     max-width: 200px;
-}
-`
+  }
+`;
 export const QuestionWrapper = styled.div`
   max-width: 1100px;
   background: #ebfeff;
@@ -56,15 +57,13 @@ export const QuestionWrapper = styled.div`
     font-size: 1rem;
   }
 `;
+
 export const ButtonWrapper = styled.div`
   transition: all 0.3s ease;
-  :hover {
-    opacity: 0.8;
-  }
+
   button {
-    cursor: pointer;
     user-select: none;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 100%;
     height: 40px;
     margin: 5px 0;
@@ -72,13 +71,13 @@ export const ButtonWrapper = styled.div`
       correct
         ? "limegreen"
         : !correct && userClicked
-        ? "linear-gradient(90deg,#ff5656,#c16868)"
+        ? "linear-gradient(90deg,#ff5658,#ff5856)"
         : "linear-gradient(90deg,#56ccff,#6eafb4)"};
-    border: 3px solid $fff;
-    box-shadow: 1px 2px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    color: #fff;
-    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);
-  }
 
-`
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+      rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 10px;
+
+    color: ${({ correct, userClicked }) => (!correct ? "#fff" : "black")};
+  }
+`;

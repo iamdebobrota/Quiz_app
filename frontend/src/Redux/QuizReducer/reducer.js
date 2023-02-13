@@ -42,7 +42,7 @@ export const quizReducer = (state = initState, { payload, type }) => {
       ...state,
       isLoading: false,
       isError: false,
-      gameOver: false,
+      score: payload
     }
     case types.USER_ANSWER: 
     return {
@@ -50,7 +50,7 @@ export const quizReducer = (state = initState, { payload, type }) => {
       isLoading: false,
       isError: false,
       gameOver: false,
-      userAnswers:  payload
+      userAnswers:  [...state.userAnswers, payload ]
     }
     default:
       return state;
