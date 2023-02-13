@@ -4,10 +4,15 @@ import { GlobalStyle, Wrapper } from "../Styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuiz } from "../Redux/QuizReducer/action";
 import * as types from "../Redux/QuizReducer/actionType";
-import { Box, Button, Heading, Skeleton, Stack, Text, useToast } from "@chakra-ui/react";
-
-
-
+import {
+  Box,
+  Button,
+  Heading,
+  Skeleton,
+  Stack,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 
 const TOTAL_QUESTIONS = 10;
 
@@ -21,8 +26,7 @@ function QuizHome() {
   const [number, setNumber] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
-  const toast = useToast()
-
+  const toast = useToast();
 
   const { isLoading, isError, userAnswers, questions } = useSelector(
     (store) => store.quizReducer
@@ -39,10 +43,8 @@ function QuizHome() {
       title: `Quiz was srated`,
       status: "success",
       isClosable: true,
-    })
-  
+    });
   };
-
 
   const checkAnswer = (e) => {
     if (!gameOver) {
@@ -66,29 +68,30 @@ function QuizHome() {
     if (nextQuestion === TOTAL_QUESTIONS) {
       setGameOver(true);
       toast({
-        title: 'Congratulations',
+        title: "Congratulations",
         description: "You have submitted the quiz! you can start again.",
-        status: 'success',
+        status: "success",
         duration: 9000,
         isClosable: true,
-      })
+      });
     } else {
       setNumber(nextQuestion);
     }
   };
 
-  return ( <Box>
+  return (
+    <Box>
       <GlobalStyle />
       <Wrapper>
         <Heading as="h3">React Quiz</Heading>
         {gameOver || userAnswers.length === TOTAL_QUESTIONS + 1 ? (
-          <Button className="start" onClick={startTrivia}>
+          <Button className="start" onClick={startTrivia}  >
             Start
           </Button>
         ) : null}
         {!gameOver ? <Text className="score">Score: {score}</Text> : null}
         {isLoading && <Heading>Loading....</Heading>}
-      
+
         {isError && <Heading as="h2">Some error occured...</Heading>}
         {!isLoading && !gameOver && (
           <QuestionCard
@@ -104,8 +107,19 @@ function QuizHome() {
         !isLoading &&
         userAnswers.length === number + 1 &&
         number !== TOTAL_QUESTIONS ? (
-          <Button className="next" _hover={{color:"black", bg:"white", border:"2px solid crimson"}} variant={"solid"} onClick={nextQuestions}>
-           { userAnswers.length === TOTAL_QUESTIONS? "Submit": "Next Question" }
+          <Button
+            className="next"
+            _hover={{
+              color: "black",
+              bg: "white",
+              border: "2px solid crimson",
+            }}
+            variant={"solid"}
+           
+            onClick={nextQuestions}>
+            {userAnswers.length === TOTAL_QUESTIONS
+              ? "Submit"
+              : "Next Question"}
           </Button>
         ) : userAnswers.length === TOTAL_QUESTIONS ? (
           <Box>Congratullation! Your score: {score}</Box>

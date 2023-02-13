@@ -9,6 +9,7 @@ const token = JSON.parse(localStorage.getItem("token")) || "";
 const initState = {
   isAuth: token ? true : false,
   token: token,
+  user:"",
   isError: false,
   isLoading: false,
 };
@@ -27,7 +28,8 @@ export const AuthReducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         isAuth: true,
-        toke: payload,
+        toke: payload.token,
+        user:payload.username,
         isLoading: false,
         isError: false,
       };
