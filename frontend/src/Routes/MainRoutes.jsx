@@ -3,24 +3,37 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Home from "../Pages/Home";
-import {Login} from "../Pages/Login";
+import { Login } from "../Pages/Login";
 import QuizHome from "../Pages/QuizHome";
 import Signup from "../Pages/Signup";
-
+import { ReqAuth } from "../components/ReqAuth";
+import { useSelector } from "react-redux";
+import Admin from "../Pages/Admin";
 
 const MainRoutes = () => {
+  const {isAdmin, token} = useSelector((state) => state.AuthReducer);
+ 
   return (
     <Box width={"100%"}>
-        <Navbar />
-        <Routes>
-
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/quiz" element={<QuizHome/>} />
-          
-        </Routes>
-     
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      
+          <Route path="/admin" element={<Admin />} />
+        
+          <Route
+            path="/quiz"
+            element={
+              <ReqAuth>
+                <QuizHome />
+              </ReqAuth>
+            }
+          />
+        
+       
+      </Routes>
     </Box>
   );
 };

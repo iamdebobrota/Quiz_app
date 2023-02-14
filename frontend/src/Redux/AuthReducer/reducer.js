@@ -1,17 +1,21 @@
 import {
   ADD_USER,
+  ADMIN_LOGIN,
   USER_FAILURE,
+  USER_LOGIN,
   USER_REQ,
+  USER_SIGNUP,
 } from "./actionType";
 
-const token = JSON.parse(localStorage.getItem("token")) || "";
+let token = localStorage.getItem("token") || "";
 
+// const token="jhsabj"
 const initState = {
-  isAuth: token ? true : false,
   token: token,
   user:"",
   isError: false,
   isLoading: false,
+  isAdmin: false
 };
 
 export const AuthReducer = (state = initState, { type, payload }) => {
@@ -19,28 +23,40 @@ export const AuthReducer = (state = initState, { type, payload }) => {
     case USER_REQ:
       return {
         ...state,
-        isAuth: false,
         isLoading: true,
         isError: false,
       };
-    case ADD_USER:
-      localStorage.setItem("token", JSON.stringify(payload));
+    case USER_LOGIN:
+      // console.log(payload)
+      localStorage.setItem("token", JSON.stringify(payload.token));
       return {
         ...state,
-        isAuth: true,
-        toke: payload.token,
-        user:payload.username,
+        token: payload.token,
+        user:payload?.user?.name,
+        isAdmin: payload?.user?.isAdmin? true: false,
         isLoading: false,
         isError: false,
       };
+    case USER_SIGNUP:
+      // localStorage.setItem("token", JSON.stringify(payload));
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+      };
+      
     case USER_FAILURE:
       return {
         ...state,
-        isAuth: false,
         token: "",
         isLoading: false,
         isError: true,
       };
+      case ADMIN_LOGIN:
+        return{
+          ...state,
+          token: payload.token
+        }
     default:
       return state;
   }

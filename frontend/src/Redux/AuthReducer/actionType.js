@@ -1,5 +1,7 @@
 
-export const ADD_USER = "ADD_USER";
+export const ADMIN_LOGIN = "ADMIN_LOGIN";
+export const USER_SIGNUP = "USER_SIGNUP";
+export const USER_LOGIN = "USER_LOGIN";
 export const USER_REQ = "USER_REQ";
 export const USER_FAILURE = "USER_FAILURE";
 
