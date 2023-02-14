@@ -7,6 +7,7 @@ import * as types from "../Redux/QuizReducer/actionType";
 import {
   Box,
   Button,
+  Container,
   Heading,
   Skeleton,
   Stack,
@@ -80,7 +81,7 @@ function QuizHome() {
   };
 
   return (
-    <Box>
+    <Container>
       <GlobalStyle />
       <Wrapper>
         <Heading as="h3">React Quiz</Heading>
@@ -125,7 +126,7 @@ function QuizHome() {
           <Box>Congratullation! Your score: {score}</Box>
         ) : null}
       </Wrapper>
-    </Box>
+    </Container>
   );
 }
 

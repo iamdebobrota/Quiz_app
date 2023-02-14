@@ -1,15 +1,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-body{
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-*{
-    box-sizing: border-box;
-    font-family: 'Catamaran' , sans-serif;
-}
+
 `;
 
 export const Wrapper = styled.div`
@@ -45,8 +37,9 @@ export const Wrapper = styled.div`
     max-width: 200px;
   }
 `;
+//  max-width: 1100px;
 export const QuestionWrapper = styled.div`
-  max-width: 1100px;
+
   background: #ebfeff;
   border-radius: 10px;
   border: 2px solid #0085a3;
