@@ -45,7 +45,7 @@ export const Login = () => {
     });
   };
   const handleLogin = () => {
-    if (text.email && text.password) {
+    if (text.email.length>4 && text.password.length>5) {
       dispatch(loginAction(text))
         .then((res) => {
           dispatch(signinSuccess(res));
@@ -70,7 +70,13 @@ export const Login = () => {
           });
         });
     }else{
-      alert("Please enter email and password")
+      toast({
+        title:
+          "Password length should be more than 5",
+        status: "error",
+        duration: 8000,
+        isClosable: true,
+      });
     }
   };
 
@@ -80,7 +86,6 @@ export const Login = () => {
     }
   }, [token]);
 
-console.log(text)
 
   return (
     <Container
@@ -124,7 +129,6 @@ console.log(text)
                   onChange={handleChange}
                 />
               </FormControl>
-              {/* <PasswordField /> */}
             </Stack>
             <HStack justify="space-between">
               <Checkbox defaultChecked>Remember me</Checkbox>
