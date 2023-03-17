@@ -12,7 +12,7 @@ export const signinSuccess = (payload) => ({
 });
 
 //LOGIN
-export const loginAction = (text, toast) => async (dispatch) => {
+export const loginAction = (text) => async (dispatch) => {
   dispatch({ type: types.USER_REQ });
   return await axios
     .post("https://masaiquiz-x8kw.onrender.com/login", text)
@@ -23,7 +23,13 @@ export const loginAction = (text, toast) => async (dispatch) => {
 export const signupAction = (payload) => (dispatch) => {
   dispatch({ type: types.USER_REQ });
   return axios
-    .post(`${url}/signup`, payload)
-    .then((res) => dispatch({ type: types.USER_SIGNUP, payload: res.data }))
-    .catch((err) => dispatch({ type: types.USER_FAILURE }));
+    .post("https://masaiquiz-x8kw.onrender.com/signup", payload)
+    // .then((res) => {
+    //   console.log(res);
+    //   dispatch({ type: types.USER_SIGNUP, payload: res.data });
+    // })
+    // .catch((err) => {
+    //   dispatch({ type: types.USER_FAILURE });
+    //   alert(err.response.data.message)
+    // });
 };

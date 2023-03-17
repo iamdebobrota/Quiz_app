@@ -21,15 +21,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   loginAction,
   signinFailed,
-  signinSuccess
+  signinSuccess,
 } from "../Redux/AuthReducer/action";
 
 export const Login = () => {
-  const [text, setText] = useState({});
+  const [text, setText] = useState({email:"", password:""});
   const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
-  const { isAdmin, token, isError, isLoading } = useSelector((state) => state.AuthReducer);
+  const { isAdmin, token, isError, isLoading } = useSelector(
+    (state) => state.AuthReducer
+  );
   const location = useLocation();
 
   let from = location.state?.from?.pathname || "/";
@@ -43,28 +45,33 @@ export const Login = () => {
     });
   };
   const handleLogin = () => {
-    dispatch(loginAction(text))
-      .then((res) => {
-        dispatch(signinSuccess(res));
-        toast({
-          title: "Login Successfully!",
-          description: "you are logged in our website.",
-          status: "success",
-          duration: 8000,
-          isClosable: true,
+    if (text.email && text.password) {
+      dispatch(loginAction(text))
+        .then((res) => {
+          dispatch(signinSuccess(res));
+          toast({
+            title: "Login Successfully!",
+            description: "you are logged in our website.",
+            status: "success",
+            duration: 8000,
+            isClosable: true,
+          });
+        })
+        .catch((err) => {
+          dispatch(signinFailed());
+          console.log(err?.response?.data);
+          toast({
+            title: "Login Failed!",
+            description:
+              "Email and password not matched. Please check or sign up.",
+            status: "error",
+            duration: 8000,
+            isClosable: true,
+          });
         });
-      })
-      .catch((err) => {
-        dispatch(signinFailed());
-        console.log(err?.response?.data);
-        toast({
-          title: "Login Failed!",
-          description: "Email and password not matched. Please check or sign up.",
-          status: "error",
-          duration: 8000,
-          isClosable: true,
-        });
-      });
+    }else{
+      alert("Please enter email and password")
+    }
   };
 
   useEffect(() => {
@@ -73,6 +80,7 @@ export const Login = () => {
     }
   }, [token]);
 
+console.log(text)
 
   return (
     <Container
@@ -101,6 +109,7 @@ export const Login = () => {
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
+                  isRequired
                   id="email"
                   type="email"
                   name="email"
@@ -108,6 +117,7 @@ export const Login = () => {
                 />
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
+                  isRequired
                   id="password"
                   type="password"
                   name="password"
@@ -123,7 +133,11 @@ export const Login = () => {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button colorScheme="linkedin" onClick={handleLogin} isLoading={isLoading}>
+              <Button
+                colorScheme="linkedin"
+                onClick={handleLogin}
+                isDisabled={!text.email || !text.password}
+                isLoading={isLoading}>
                 Sign in
               </Button>
               <HStack>

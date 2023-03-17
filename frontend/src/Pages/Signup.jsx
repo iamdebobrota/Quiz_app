@@ -15,6 +15,8 @@ import {
   Image,
   useToast,
 } from "@chakra-ui/react";
+import * as types from "../Redux/AuthReducer/actionType";
+
 import { useState } from "react";
 import quizicon from "../components/quizicon.svg";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -22,34 +24,50 @@ import { useDispatch, useSelector } from "react-redux";
 import { signupAction } from "../Redux/AuthReducer/action";
 
 const Signup = () => {
-  const [text, setText] = useState({})
+  const initText = { name: "", email: "", password: "" };
+  const [text, setText] = useState(initText);
   const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
-  const { isAdmin, token, isError, isLoading } = useSelector((state) => state.AuthReducer);
+  const { isAdmin, token, isError, isLoading } = useSelector(
+    (state) => state.AuthReducer
+  );
   const location = useLocation();
 
+  const handleChange = (e) => {
+    let inp = e.target.name;
 
-const handleChange=(e)=>{
-let inp=e.target.name;
-
-setText({
-  ...text,
-  [inp]: e.target.value
-})
-}
-const handleSubmit=()=>{
-// console.log(text)
-dispatch(signupAction(text)).then((r)=>{
-  toast({
-    title: "Signup Successfull!",
-    description: "Please login for access the features.",
-    status: "success",
-    duration: 8000,
-    isClosable: true,
-  });
-})
-}
+    setText({
+      ...text,
+      [inp]: e.target.value,
+    });
+  };
+  const handleSubmit = () => {
+    dispatch(signupAction(text))
+      .then((res) => {
+        dispatch({ type: types.USER_SIGNUP, payload: res.data });
+        toast({
+               title: "Signup Successfull!",
+               description: "Please login for access the features.",
+               status: "success",
+               duration: 8000,
+               isClosable: true,
+              });
+              setText(initText);
+              navigate("/login")
+      })
+      .catch((err) => {
+        dispatch({ type: types.USER_FAILURE });
+        toast({
+          title: "Signup failed!",
+          description: `${err.response.data.message}`,
+          status: "error",
+          duration: 8000,
+          isClosable: true,
+         });
+      });
+     
+  };
 
   return (
     <Container
@@ -77,11 +95,29 @@ dispatch(signupAction(text)).then((r)=>{
             <Stack spacing="5">
               <FormControl>
                 <FormLabel htmlFor="name">Name</FormLabel>
-                <Input id="name" type="name" name="name"  onChange={handleChange}/>
+                <Input
+                  id="name"
+                  type="name"
+                  name="name"
+                  value={text.name}
+                  onChange={handleChange}
+                />
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <Input id="email" type="email" name="email"  onChange={handleChange}/>
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={text.email}
+                  onChange={handleChange}
+                />
                 <FormLabel htmlFor="password">Password</FormLabel>
-                <Input id="password" type="password" name="password" onChange={handleChange} />
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={text.password}
+                  onChange={handleChange}
+                />
               </FormControl>
               {/* <PasswordField /> */}
             </Stack>
@@ -92,7 +128,13 @@ dispatch(signupAction(text)).then((r)=>{
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button colorScheme="linkedin" onClick={handleSubmit} isLoading={isLoading}>sign up</Button>
+              <Button
+                colorScheme="linkedin"
+                onClick={handleSubmit}
+                isDisabled={!text.email || !text.password}
+                isLoading={isLoading}>
+                sign up
+              </Button>
               <HStack>
                 <Divider />
                 <Text fontSize="sm" whiteSpace="nowrap" color="muted">
@@ -104,7 +146,7 @@ dispatch(signupAction(text)).then((r)=>{
           </Stack>
           <HStack spacing="1" justify="center">
             <Text color="muted">You already have an account?</Text>
-            <Link to="/login" style={{color:"#00a0dc", fontWeight:"bold"}}>
+            <Link to="/login" style={{ color: "#00a0dc", fontWeight: "bold" }}>
               sign in
             </Link>
           </HStack>

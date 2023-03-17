@@ -9,6 +9,7 @@ import Signup from "../Pages/Signup";
 import { ReqAuth } from "../components/ReqAuth";
 import { useSelector } from "react-redux";
 import Admin from "../Pages/Admin";
+import Profile from "../Pages/Profile";
 
 const MainRoutes = () => {
   const {isAdmin, token} = useSelector((state) => state.AuthReducer);
@@ -21,7 +22,8 @@ const MainRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       
-          <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={ <ReqAuth><Admin /></ReqAuth>} />
+        <Route path="/profile" element={ <ReqAuth><Profile /></ReqAuth>} />
         
           <Route
             path="/quiz"
