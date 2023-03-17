@@ -82,11 +82,11 @@ const verifyToken = (req, res, next) => {
   // const token = cookies.split("=")[1];
 
   const headers = req.headers[`authorization`];
-  const token = headers.split(" ");
+  const token = headers.split(" ")[0];
   if (!token) {
     res.status(404).json({ message: "No token found" });
   }
-  jwt.verify(String(token), JWT_SECRET_KEY, (error, user) => {
+  jwt.verify(String(token), process.env.JWT_SECRET_KEY, (error, user) => {
     if (error) {
       res.status(400).json({ message: "Invalid Token" });
     }
