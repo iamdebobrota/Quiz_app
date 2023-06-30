@@ -2,7 +2,7 @@ const express = require("express");
 const connection = require("./db");
 const cors = require("cors");
 const userRouter = require("./routes/user.routes");
-const quizRouter = require("./routes/quiz.routes")
+const quizRouter = require("./routes/quiz.routes");
 const app = express();
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
@@ -13,7 +13,11 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-app.use("/", quizRouter)
+app.get("/", (req, res) => {
+  res.send("Hi, this is homepage");
+});
+
+app.use("/", quizRouter);
 app.use("/", userRouter);
 
 app.listen(PORT, async () => {

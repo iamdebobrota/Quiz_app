@@ -2,17 +2,18 @@ import { Box } from "@chakra-ui/react";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Home from "../Pages/Home";
-import { Login } from "../Pages/Login";
-import QuizHome from "../Pages/QuizHome";
-import Signup from "../Pages/Signup";
+import Home from "../Pages/user/Home";
+import { Login } from "../Pages/auth/Login";
+import QuizHome from "../Pages/user/QuizHome";
+import Signup from "../Pages/auth/Signup";
 import { ReqAuth } from "../components/ReqAuth";
 import { useSelector } from "react-redux";
-import Admin from "../Pages/Admin";
-import Profile from "../Pages/Profile";
+import Admin from "../Pages/admin/Admin";
+import Profile from "../Pages/user/Profile";
+import NotFoundPage from "../Pages/NotFoundPage";
 
 const MainRoutes = () => {
-  const {isAdmin, token} = useSelector((state) => state.AuthReducer);
+  // const {isAdmin, token} = useSelector((state) => state.AuthReducer);
  
   return (
     <Box width={"100%"}>
@@ -23,6 +24,7 @@ const MainRoutes = () => {
         <Route path="/login" element={<Login />} />
       
         <Route path="/admin" element={ <ReqAuth><Admin /></ReqAuth>} />
+        <Route path="*" element={<NotFoundPage/>} />
         <Route path="/profile" element={ <ReqAuth><Profile /></ReqAuth>} />
         
           <Route

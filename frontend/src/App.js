@@ -1,5 +1,4 @@
 import './App.css';
-import QuizHome from './Pages/QuizHome';
 import MainRoutes from './Routes/MainRoutes';
 
 function App() {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import QuestionCard from "../components/QuestionCard";
-import { GlobalStyle, Wrapper } from "../Styles/Styles";
+import QuestionCard from "../../components/QuestionCard";
+import { GlobalStyle, Wrapper } from "../../Styles/Styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuiz } from "../Redux/QuizReducer/action";
-import * as types from "../Redux/QuizReducer/actionType";
+import { getQuiz } from "../../Redux/QuizReducer/action";
+import * as types from "../../Redux/QuizReducer/actionType";
 import {
   Box,
   Button,

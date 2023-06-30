@@ -11,6 +11,11 @@ export const signinSuccess = (payload) => ({
   payload,
 });
 
+export const SingleUserAction = (payload) => ({
+  type: types.SINGLE_USER_GET,
+  payload,
+});
+
 //LOGIN
 export const loginAction = (text) => async (dispatch) => {
   dispatch({ type: types.USER_REQ });
@@ -22,14 +27,19 @@ export const loginAction = (text) => async (dispatch) => {
 //signup
 export const signupAction = (payload) => (dispatch) => {
   dispatch({ type: types.USER_REQ });
-  return axios
-    .post("https://masaiquiz-x8kw.onrender.com/signup", payload)
-    // .then((res) => {
-    //   console.log(res);
-    //   dispatch({ type: types.USER_SIGNUP, payload: res.data });
-    // })
-    // .catch((err) => {
-    //   dispatch({ type: types.USER_FAILURE });
-    //   alert(err.response.data.message)
-    // });
+  return axios.post("https://masaiquiz-x8kw.onrender.com/signup", payload);
+};
+
+// getUser
+export const getSingleUser = (payload) => (dispatch) => {
+  dispatch({ type: types.USER_REQ });
+  return fetch("http://localhost:8080/user", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: payload,
+    },
+  }).then((res) => res.json())
+  .then((res)=> dispatch(SingleUserAction(res.user)))
+  .catch((er)=> dispatch({type:types.USER_FAILURE}))
 };

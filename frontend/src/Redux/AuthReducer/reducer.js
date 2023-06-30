@@ -1,6 +1,7 @@
 import {
   ADD_USER,
   ADMIN_LOGIN,
+  SINGLE_USER_GET,
   USER_FAILURE,
   USER_LOGIN,
   USER_REQ,
@@ -15,7 +16,9 @@ const initState = {
   user:"",
   isError: false,
   isLoading: false,
-  isAdmin: false
+  isAdmin: false,
+  email:"",
+  userCreatedAt:""
 };
 
 export const AuthReducer = (state = initState, { type, payload }) => {
@@ -27,7 +30,6 @@ export const AuthReducer = (state = initState, { type, payload }) => {
         isError: false,
       };
     case USER_LOGIN:
-      // console.log(payload)
       localStorage.setItem("token", JSON.stringify(payload.token));
       return {
         ...state,
@@ -56,6 +58,14 @@ export const AuthReducer = (state = initState, { type, payload }) => {
         return{
           ...state,
           token: payload.token
+        }
+        case SINGLE_USER_GET: return{
+          ...state,
+          isLoading: false,
+          user:payload.name,
+          isAdmin: payload.isAdmin,
+          email:payload.email,
+          userCreatedAt:payload.createdAt
         }
     default:
       return state;

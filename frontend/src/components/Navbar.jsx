@@ -18,7 +18,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import quizicon from "./quizicon.svg";
+import quizicon from "../utils/quizicon.svg";
+import MenuNav from "./MenuNav";
 import { useSelector } from "react-redux";
 
 export default function Navbar() {
@@ -28,13 +29,13 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate("/login")
-  }
+    navigate("/login");
+  };
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
   };
-  
+
   // console.log(user)
   return (
     <>
@@ -63,10 +64,13 @@ export default function Navbar() {
           </HStack>
           <Flex alignItems={"center"}>
             <Link to="/login">
-              <Button variant={"solid"} colorScheme={"teal"} size={"sm"} mr={4}
-           onClick={token.length !== 0 ? handleLogout : handleLogin}
-              >
-                 {token.length === 0 ? "Sign in" : "Log out"} 
+              <Button
+                variant={"solid"}
+                colorScheme={"teal"}
+                size={"sm"}
+                mr={4}
+                onClick={token.length !== 0 ? handleLogout : handleLogin}>
+                {token.length === 0 ? "Sign in" : "Log out"}
               </Button>
             </Link>
             <Menu>
@@ -86,7 +90,9 @@ export default function Navbar() {
               <MenuList>
                 <MenuItem>{user}</MenuItem>
                 <MenuDivider />
-               <Link to="/profile"><MenuItem >Profile</MenuItem></Link> 
+                <Link to="/profile">
+                  <MenuItem>Profile</MenuItem>
+                </Link>
               </MenuList>
             </Menu>
           </Flex>
@@ -101,6 +107,7 @@ export default function Navbar() {
           </Box>
         ) : null}
       </Box>
+      <MenuNav />
     </>
   );
 }

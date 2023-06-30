@@ -15,14 +15,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import quizicon from "../components/quizicon.svg";
+import quizicon from "../../utils/quizicon.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loginAction,
   signinFailed,
   signinSuccess,
-} from "../Redux/AuthReducer/action";
+} from "../../Redux/AuthReducer/action";
 
 export const Login = () => {
   const [text, setText] = useState({email:"", password:""});

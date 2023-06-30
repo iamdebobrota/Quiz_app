@@ -15,13 +15,13 @@ import {
   Image,
   useToast,
 } from "@chakra-ui/react";
-import * as types from "../Redux/AuthReducer/actionType";
+import * as types from "../../Redux/AuthReducer/actionType";
 
 import { useState } from "react";
-import quizicon from "../components/quizicon.svg";
+import quizicon from "../../utils/quizicon.svg";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signupAction } from "../Redux/AuthReducer/action";
+import { signupAction } from "../../Redux/AuthReducer/action";
 
 const Signup = () => {
   const initText = { name: "", email: "", password: "" };
@@ -29,7 +29,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
-  const { isAdmin, token, isError, isLoading } = useSelector(
+  const {isLoading } = useSelector(
     (state) => state.AuthReducer
   );
   const location = useLocation();
@@ -47,14 +47,14 @@ const Signup = () => {
       .then((res) => {
         dispatch({ type: types.USER_SIGNUP, payload: res.data });
         toast({
-               title: "Signup Successfull!",
-               description: "Please login for access the features.",
-               status: "success",
-               duration: 8000,
-               isClosable: true,
-              });
-              setText(initText);
-              navigate("/login")
+          title: "Signup Successfull!",
+          description: "Please login for access the features.",
+          status: "success",
+          duration: 8000,
+          isClosable: true,
+        });
+        setText(initText);
+        navigate("/login");
       })
       .catch((err) => {
         dispatch({ type: types.USER_FAILURE });
@@ -64,9 +64,8 @@ const Signup = () => {
           status: "error",
           duration: 8000,
           isClosable: true,
-         });
+        });
       });
-     
   };
 
   return (
